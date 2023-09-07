@@ -8,15 +8,21 @@ double objective_function3(double x);
 double objective_function4(double x);
 double objective_function5(double x);
 double objective_function6(double x);
-pair<double, double> Bounding_Phase(double a, double b, bool minimize, double (*objective_function)(double));
-void Newton_Raphson(double a, double b, double (*objective_function)(double));
-int c, funcNum;
-fstream out;
 
+double numerical_Derivative(double f_xh0, double f_xh1, double h);
+double numerical_SecondDerivative(double f_xh0, double f_x, double f_xh1, double h);
+
+void Newton_Raphson(double a, double b, double (*objective_function)(double));
+pair<double, double> Bounding_Phase(double a, double b, bool minimize, double (*objective_function)(double));
+
+int c;
+fstream out;
 
 int main() {
     double a, b;       
     pair<double, double> result;
+    int funcNum;
+
     cout << "Enter\n a = lower limit of x\n b = upper limit of x\n Enter 1 to minimize and 0 to maximize:\n";
     cin >> a >> b >> c;
     cout << "Enter Objective function number you want to use (1-6):\n";
@@ -78,16 +84,16 @@ double objective_function1(double x) {
     return(pow(2*x-5, 4) - pow(x*x-1, 3));
 }
 double objective_function2(double x) {
-    return(8 + pow(x, 3) - 2*x - 2*pow(2.71828, x));
+    return(8 + pow(x, 3) - 2*x - 2*exp(x));
 }
 double objective_function3(double x) {
     return(4*x* sin(x));
 }
 double objective_function4(double x) {
-    return(2*pow(x-3, 2) + pow(2.71828, 0.5*x*x));
+    return(2*pow(x-3, 2) + exp(0.5*x*x));
 }
 double objective_function5(double x) {
-    return(x*x - 10*pow(2.71828, 0.1*x));
+    return(x*x - 10*exp(0.1*x));
 }
 double objective_function6(double x) {
     return(20*sin(x) - 15*x*x);
@@ -212,18 +218,18 @@ pair<double, double> Bounding_Phase (double a, double b, bool minimize, double (
 
     if (minimize) {
         if (f1 >= f2 && f2 >= f3) {
-            delta = delta;
+            delta = fabs(delta);
         }
         else {
-            delta = -delta;
+            delta = -fabs(delta);
         }
     }
     else {
         if (f1 >= f2 && f2 >= f3) {
-            delta = -delta;
+            delta = -fabs(delta);
         }
         else {
-            delta = delta;
+            delta = fabs(delta);
         }
     }
 
