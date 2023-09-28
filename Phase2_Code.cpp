@@ -464,7 +464,7 @@ pair<double, double> Bounding_Phase (double a, double b, bool minimize, double (
 vector<double> Newton_Multivariable_Gradient(double n) {
 
     /* Step 1: Initialisation */
-    double M = 1000, K = 0, epsilon1 = 1e-6, epsilon2 = 1e-6;
+    double M = 1000, K = 0, epsilon1 = 1e-4, epsilon2 = 1e-4;
 
     for (int i = 0; i < n; ++i) {    
         double temp;
